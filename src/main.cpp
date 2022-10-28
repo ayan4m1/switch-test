@@ -12,6 +12,10 @@
 CRGB leds[NUM_RGB] = {CRGB::Orange};
 Button2 button = Button2();
 
+#define NUM_NOTES 5
+uint32_t melody[][2] = {
+    {400, 170}, {600, 448}, {400, 170}, {800, 448}, {300, 768}};
+
 void pressed(Button2& btn) {
   tone(PIN_LS, LS_FREQ);
   leds[0] = CRGB::Green;
@@ -28,11 +32,9 @@ void note(uint32_t freq, uint16_t dur) {
 }
 
 void startupMelody() {
-  note(400, 170);
-  note(600, 448);
-  note(400, 170);
-  note(800, 448);
-  note(300, 768);
+  for (uint8_t i = 0; i < NUM_NOTES; i++) {
+    note(melody[i][0], melody[i][1]);
+  }
 }
 
 void setup() {
