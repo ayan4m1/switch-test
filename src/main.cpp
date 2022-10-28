@@ -11,13 +11,17 @@ void pressed(Button2& btn) { tone(PIN_LS, LS_FREQ); }
 
 void released(Button2& btn) { noTone(PIN_LS); }
 
+void note(uint32_t freq, uint16_t dur) {
+  tone(PIN_LS, freq, dur);
+  delay(dur - 1);
+}
+
 void startupMelody() {
-  tone(PIN_LS, 2000, 150);
-  delay(150);
-  tone(PIN_LS, 4000, 250);
-  delay(250);
-  tone(PIN_LS, 2000, 150);
-  delay(1000);
+  note(400, 170);
+  note(600, 448);
+  note(400, 170);
+  note(800, 448);
+  note(300, 768);
 }
 
 void setup() {
