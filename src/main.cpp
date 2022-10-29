@@ -4,12 +4,18 @@
 
 #define PIN_LS 6
 #define PIN_SWITCH 7
+
 #define PIN_RGB_POWER 38
 #define PIN_RGB 39
-#define LS_FREQ 4e3
 #define NUM_RGB 1
 
-CRGB leds[NUM_RGB] = {CRGB::Orange};
+#define LS_FREQ 4e3
+
+#define COLOR_OK CRGB::Green
+#define COLOR_READY CRGB::Red
+
+bool detected = false;
+CRGB leds[NUM_RGB] = {COLOR_READY};
 Button2 button = Button2();
 
 #define NUM_NOTES 5
@@ -18,12 +24,12 @@ uint32_t melody[][2] = {
 
 void pressed(Button2& btn) {
   tone(PIN_LS, LS_FREQ);
-  leds[0] = CRGB::Green;
+  leds[0] = COLOR_OK;
 }
 
 void released(Button2& btn) {
   noTone(PIN_LS);
-  leds[0] = CRGB::Red;
+  leds[0] = COLOR_READY;
 }
 
 void note(uint32_t freq, uint16_t dur) {
@@ -50,7 +56,7 @@ void setup() {
 
   startupMelody();
 
-  leds[0] = CRGB::Red;
+  leds[0] = COLOR_READY;
 }
 
 void loop() {
