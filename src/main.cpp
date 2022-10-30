@@ -16,10 +16,14 @@ uint32_t count = 0;
 
 void pressed(Button2& btn) {
   led.setColor(COLOR_OK);
+  buzzer.playTone();
   count++;
 }
 
-void released(Button2& btn) { led.setColor(COLOR_READY); }
+void released(Button2& btn) {
+  led.setColor(COLOR_READY);
+  buzzer.stopTone();
+}
 
 void setup() {
   display.init();
