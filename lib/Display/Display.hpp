@@ -6,8 +6,6 @@
 #include <gfx.hpp>
 #include <ssd1306.hpp>
 
-#include "PixelOperator8.hpp"
-
 #define LCD_WIDTH 128
 #define LCD_HEIGHT 32
 #define LCD_ROTATION 0

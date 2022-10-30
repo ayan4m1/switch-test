@@ -1,5 +1,8 @@
 #include "Buzzer.hpp"
 
+uint32_t melody[][2] = {
+    {400, 170}, {600, 448}, {400, 170}, {800, 448}, {300, 768}};
+
 void Buzzer::init() { pinMode(LS_PIN, OUTPUT); }
 
 void Buzzer::playNote(const uint32_t freq, const uint16_t dur) {

@@ -1,5 +1,7 @@
 #include "Display.hpp"
 
+#include "PixelOperator8.hpp"
+
 void Display::init() { lcd.clear(lcd.bounds()); }
 
 void Display::update(const uint32_t count) {
