@@ -2,64 +2,41 @@
 #include <Button2.h>
 #include <FastLED.h>
 
-#define PIN_LS 6
-#define PIN_SWITCH 7
+#include <Buzzer.hpp>
+#include <Display.hpp>
+#include <LED.hpp>
 
-#define PIN_RGB_POWER 38
-#define PIN_RGB 39
-#define NUM_RGB 1
+#define SWITCH_PIN 17
 
-#define LS_FREQ 4e3
-
-#define COLOR_OK CRGB::Green
-#define COLOR_READY CRGB::Red
-
-bool detected = false;
-CRGB leds[NUM_RGB] = {COLOR_READY};
 Button2 button = Button2();
-
-#define NUM_NOTES 5
-uint32_t melody[][2] = {
-    {400, 170}, {600, 448}, {400, 170}, {800, 448}, {300, 768}};
+Buzzer buzzer = Buzzer();
+Display display = Display();
+LED led = LED();
+uint32_t count = 0;
 
 void pressed(Button2& btn) {
-  tone(PIN_LS, LS_FREQ);
-  leds[0] = COLOR_OK;
+  led.setColor(COLOR_OK);
+  count++;
 }
 
-void released(Button2& btn) {
-  noTone(PIN_LS);
-  leds[0] = COLOR_READY;
-}
-
-void note(uint32_t freq, uint16_t dur) {
-  tone(PIN_LS, freq, dur);
-  delay(dur - 1);
-}
-
-void startupMelody() {
-  for (uint8_t i = 0; i < NUM_NOTES; i++) {
-    note(melody[i][0], melody[i][1]);
-  }
-}
+void released(Button2& btn) { led.setColor(COLOR_READY); }
 
 void setup() {
-  pinMode(PIN_RGB_POWER, OUTPUT);
-  digitalWrite(PIN_RGB_POWER, HIGH);
+  display.init();
 
-  FastLED.addLeds<NEOPIXEL, PIN_RGB>(leds, NUM_RGB);
-  FastLED.show();
+  led.init();
 
   button.setPressedHandler(pressed);
   button.setReleasedHandler(released);
-  button.begin(PIN_SWITCH);
+  button.begin(SWITCH_PIN);
 
-  startupMelody();
-
-  leds[0] = COLOR_READY;
+  buzzer.init();
+  buzzer.playMelody();
 }
 
 void loop() {
   button.loop();
-  FastLED.show();
+  led.loop();
+
+  EVERY_N_SECONDS(1) { display.update(count); }
 }
