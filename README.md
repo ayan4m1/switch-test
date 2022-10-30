@@ -10,7 +10,7 @@ To provide a simple, reliable, and fast way to test a batch of keyswitches. You 
 
 | Qty | Part                                                                          | Notes                            |
 | --- | ----------------------------------------------------------------------------- | -------------------------------- |
-| 1   | [100 Ohm Resistor](https://www.amazon.com/dp/B072BL2VX1)                      | Through-hole, 1/4W is sufficient |
+| 1   | [10k Ohm Resistor](https://www.amazon.com/dp/B072BL2VX1)                      | Through-hole, 1/4W is sufficient |
 | 1   | [PS1240P02CT3](https://www.mouser.com/ProductDetail/810-PS1240P02CT3)         | Piezo buzzer, 4kHz               |
 | 1   | [QT Py ESP32-S3](https://www.adafruit.com/product/5426)                       |                                  |
 | 1   | [0.96" SSD1306 OLED](https://www.amazon.com/gp/product/B0837DLWVH)            |                                  |
