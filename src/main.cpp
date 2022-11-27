@@ -12,16 +12,15 @@ Button2 button = Button2();
 Buzzer buzzer = Buzzer();
 Display display = Display();
 LED led = LED();
-uint32_t count = 0;
 
 void pressed(Button2& btn) {
-  led.setColor(COLOR_OK);
+  display.setOk(true);
   buzzer.playTone();
-  count++;
+  display.incrementCount();
 }
 
 void released(Button2& btn) {
-  led.setColor(COLOR_READY);
+  display.setOk(false);
   buzzer.stopTone();
 }
 
@@ -42,5 +41,5 @@ void loop() {
   button.loop();
   led.loop();
 
-  EVERY_N_SECONDS(1) { display.update(count); }
+  EVERY_N_MILLIS(100) { display.update(); }
 }
