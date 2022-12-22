@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define LS_PIN 18
+#define LS_PIN 35
 #define LS_FREQ 4e3
 #define MELODY_NOTES 5
 

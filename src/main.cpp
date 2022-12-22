@@ -1,45 +1,41 @@
 #include <Arduino.h>
-#include <Button2.h>
 #include <FastLED.h>
 
 #include <Buzzer.hpp>
 #include <Display.hpp>
-#include <LED.hpp>
+#include <htcw_button.hpp>
 
-#define SWITCH_PIN 17
+#define SWITCH_PIN 36
 
-Button2 button = Button2();
+using namespace arduino;
+using btn_t = button<SWITCH_PIN, 10, true>;
+
+btn_t btn;
 Buzzer buzzer = Buzzer();
 Display display = Display();
-LED led = LED();
 
-void pressed(Button2& btn) {
-  display.setOk(true);
-  buzzer.playTone();
-  display.incrementCount();
-}
-
-void released(Button2& btn) {
-  display.setOk(false);
-  buzzer.stopTone();
+void stateChange(const bool pressed, void* state) {
+  display.setOk(pressed);
+  if (pressed) {
+    buzzer.playTone();
+    display.incrementCount();
+  } else {
+    buzzer.stopTone();
+  }
 }
 
 void setup() {
   display.init();
 
-  led.init();
-
-  button.setPressedHandler(pressed);
-  button.setReleasedHandler(released);
-  button.begin(SWITCH_PIN);
+  btn.callback(stateChange);
+  btn.initialize();
 
   buzzer.init();
   buzzer.playMelody();
 }
 
 void loop() {
-  button.loop();
-  led.loop();
+  btn.update();
 
   EVERY_N_MILLIS(100) { display.update(); }
 }
